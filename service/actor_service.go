@@ -1,9 +1,16 @@
 package service
 
-import "dvdrental/repository"
+import (
+	"context"
+	"database/sql"
+	"dvdrental/models/request"
+	"dvdrental/repository"
+
+	"github.com/go-playground/validator/v10"
+)
 
 type ActorService interface {
-	Create()
+	Create(ctx context.Context, request request.ActorCreateRequest)
 	Update()
 	Delete()
 	Find()
@@ -12,15 +19,19 @@ type ActorService interface {
 
 type actorService struct {
 	repository repository.ActorRepository
+	db         *sql.DB
+	validate   *validator.Validate
 }
 
-func NewActorService(repo repository.ActorRepository) ActorService {
+func NewActorService(repo repository.ActorRepository, dbConn *sql.DB, validator *validator.Validate) ActorService {
 	return &actorService{
 		repository: repo,
+		db:         dbConn,
+		validate:   validator,
 	}
 }
 
-func (service *actorService) Create() {
+func (service *actorService) Create(ctx context.Context, request request.ActorCreateRequest) {
 	panic("NY Implemented")
 }
 
