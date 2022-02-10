@@ -8,16 +8,20 @@ func LogErrorAndPanic(err error) {
 	}
 }
 
-func LogErrorWithFields(err error, fieldName string, value interface{}) {
+func LogErrorWithFields(err error, fieldName string, value interface{}) bool {
 	if err != nil {
 		Logger().WithFields(logrus.Fields{
 			fieldName: value,
 		}).Error(err.Error())
+		return true
 	}
+	return false
 }
 
-func LogError(err error) {
+func LogError(err error) bool {
 	if err != nil {
 		Logger().Error(err.Error())
+		return true
 	}
+	return false
 }
