@@ -1,3 +1,6 @@
 # local dbsetup development
 .vscode
 dvdrental_test.session.sql
+
+# logger
+application.log
