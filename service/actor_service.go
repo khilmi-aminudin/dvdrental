@@ -49,6 +49,8 @@ func (service *actorService) Create(ctx context.Context, request request.ActorCr
 	tx, err := service.db.Begin()
 	_ = helper.LogError(err)
 
+	defer helper.CommitOrRollback(tx)
+
 	actor := service.repository.Create(ctx, tx, entity.Actor{FirstName: request.FirstName, LastName: request.LastName})
 	return responses.ApiResponse{
 		Code:   http.StatusOK,
@@ -71,8 +73,9 @@ func (service *actorService) Update(ctx context.Context, request request.ActorUp
 	tx, err := service.db.Begin()
 	_ = helper.LogError(err)
 
-	actor := service.repository.Update(ctx, tx, entity.Actor{ActorID: request.ActorID, FirstName: request.FirstName, LastName: request.LastName})
+	defer helper.CommitOrRollback(tx)
 
+	actor := service.repository.Update(ctx, tx, entity.Actor{ActorID: request.ActorID, FirstName: request.FirstName, LastName: request.LastName})
 	return responses.ApiResponse{
 		Code:   http.StatusOK,
 		Status: "Success",
@@ -83,6 +86,8 @@ func (service *actorService) Update(ctx context.Context, request request.ActorUp
 func (service *actorService) Delete(ctx context.Context, actorID int64) responses.ApiResponse {
 	tx, err := service.db.Begin()
 	_ = helper.LogError(err)
+
+	defer helper.CommitOrRollback(tx)
 
 	err = service.repository.Delete(ctx, tx, entity.Actor{ActorID: actorID})
 
@@ -106,6 +111,8 @@ func (service *actorService) Find(ctx context.Context, actorID int64) responses.
 	tx, err := service.db.Begin()
 	_ = helper.LogError(err)
 
+	defer helper.CommitOrRollback(tx)
+
 	actor := service.repository.Find(ctx, tx, entity.Actor{ActorID: actorID})
 
 	return responses.ApiResponse{
@@ -118,6 +125,8 @@ func (service *actorService) Find(ctx context.Context, actorID int64) responses.
 func (service *actorService) FindAll(ctx context.Context) responses.ApiResponse {
 	tx, err := service.db.Begin()
 	_ = helper.LogError(err)
+
+	defer helper.CommitOrRollback(tx)
 
 	actors := service.repository.FindAll(ctx, tx)
 

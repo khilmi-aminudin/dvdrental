@@ -121,10 +121,10 @@ func (repository *actorRepository) FindAll(ctx context.Context, tx *sql.Tx) []en
 	for rows.Next() {
 		var actor entity.Actor
 		err = rows.Scan(
-			actor.ActorID,
-			actor.FirstName,
-			actor.LastName,
-			actor.LastUpdate,
+			&actor.ActorID,
+			&actor.FirstName,
+			&actor.LastName,
+			&actor.LastUpdate,
 		)
 		helper.LogError(err)
 		result = append(result, actor)
