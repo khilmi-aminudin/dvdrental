@@ -4,3 +4,7 @@ dvdrental_test.session.sql
 
 # logger
 application.log
+
+# testing env
+service/.env
+service/application.log

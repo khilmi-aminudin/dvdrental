@@ -9,3 +9,12 @@ rundb	:
 
 stopdb	:
 	docker stop postgresdb
+
+redis : 
+	docker run --name my-redis -p 6379:6379 -d redis
+
+runredis:
+	docker start my-redis
+
+runrediscli:
+	docker exec -it my-redis redis-cli
